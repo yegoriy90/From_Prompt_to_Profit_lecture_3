@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Video — Шпаргалка</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Mulish:wght@300;400;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f1ed;--surface:#fff;--border:#dedad0;--border2:#e6e3da;--text:#1c1c1a;--muted:#6a6860;--hint:#a8a49c;--acc1:#bf4400;--acc2:#a82828;--acc3:#1460a0;--acc4:#5438a8;--acc5:#145e40;--acc6:#b85000}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Mulish',sans-serif;min-height:100vh;font-size:14px;line-height:1.6}
+.nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border2);padding:0 24px;display:flex;align-items:stretch;gap:2px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-brand{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--acc1);letter-spacing:.08em;padding:14px 20px 14px 0;border-right:1px solid var(--border2);margin-right:10px;white-space:nowrap;display:flex;align-items:center}
+.tab{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;padding:14px 18px;cursor:pointer;color:var(--hint);border-bottom:2px solid transparent;transition:.2s;white-space:nowrap;user-select:none;background:none;border-top:none;border-left:none;border-right:none}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--acc1);border-bottom-color:var(--acc1)}
+.section{display:none;padding:32px 24px 80px;max-width:1000px;margin:0 auto;animation:fadeIn .3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.page-title{font-family:'Syne',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:800;line-height:1;margin-bottom:8px;letter-spacing:-.01em;color:var(--text)}
+.page-sub{color:var(--hint);font-size:14px;margin-bottom:40px;font-weight:300}
+h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin:36px 0 16px;color:var(--text)}
+h3{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--acc1);margin:0 0 8px;letter-spacing:.08em;text-transform:uppercase}
+p{color:var(--muted);line-height:1.7;margin-bottom:8px}
+p:last-child{margin-bottom:0}
+strong{color:var(--text);font-weight:600}
+code{font-family:'DM Mono',monospace;font-size:11px;background:#ddeaf6;padding:2px 7px;border-radius:4px;color:#104a80}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card.c1::before{background:var(--acc3)}
+.card.c2::before{background:var(--acc2)}
+.card.c3::before{background:var(--acc5)}
+.card.c4::before{background:var(--acc4)}
+.card.c5::before{background:var(--acc6)}
+.card-rank{position:absolute;top:14px;right:16px;font-family:'Syne',sans-serif;font-size:28px;font-weight:800;opacity:.06;line-height:1;color:var(--text)}
+.card-name{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px}
+.card-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:20px;margin-bottom:14px;letter-spacing:.06em;background:var(--bg);border:1px solid var(--border);color:var(--hint)}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.pros-label,.cons-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;margin-bottom:6px;font-weight:700}
+.pros-label{color:var(--acc5)}
+.cons-label{color:var(--acc2)}
+.item-list{list-style:none}
+.item-list li{padding:4px 0;padding-left:14px;position:relative;color:var(--muted);font-size:13px;line-height:1.5}
+.item-list li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%}
+.pros-list li::before{background:var(--acc5)}
+.cons-list li::before{background:var(--acc2)}
+.when-tag{margin-top:14px;padding:8px 12px;background:var(--bg);border-radius:6px;font-size:12px;color:var(--muted);border-left:3px solid var(--border)}
+.when-tag strong{color:var(--acc1);font-size:10px;font-family:'DM Mono',monospace;letter-spacing:.08em;display:block;margin-bottom:2px;font-weight:700}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font-family:'DM Mono',monospace;font-size:10px;padding:3px 9px;border:1px solid var(--border2);border-radius:20px;color:var(--muted);background:var(--bg)}
+.cam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.cam-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:16px}
+.cam-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px;color:var(--text)}
+.cam-uk{font-size:12px;color:var(--hint);margin-bottom:8px}
+.cam-prompt{font-family:'DM Mono',monospace;font-size:11px;color:#104a80;background:#e8f2fa;padding:7px 10px;border-radius:6px;border-left:2px solid #1460a0;line-height:1.5;margin-bottom:8px}
+.cam-use{font-size:12px;color:var(--hint)}
+.prompt-block{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:20px;margin-bottom:16px}
+.prompt-parts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.pp{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:.04em}
+.pp1{background:#d8edf8;color:#104a80;border:1px solid #a8ccec}
+.pp2{background:#fdeee0;color:#963200;border:1px solid #f0b888}
+.pp3{background:#fde0e0;color:#882020;border:1px solid #e8b0b0}
+.pp4{background:#ece6f8;color:#3a2880;border:1px solid #c0b0e8}
+.pp5{background:#e0f4ea;color:#0e4e30;border:1px solid #a0d4b8}
+.prompt-example{font-family:'DM Mono',monospace;font-size:12px;color:#334;background:#f0f2f6;padding:12px 14px;border-radius:8px;line-height:1.7;border:1px solid var(--border2)}
+.artifact-row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+.artifact-row:last-child{border-bottom:none}
+.artifact-name{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;min-width:140px;color:var(--text)}
+.artifact-desc{font-size:13px;color:var(--muted);flex:1}
+.fix-badge{font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:20px;background:#fde0e0;color:#882020;border:1px solid #e8b0b0;white-space:nowrap;margin-top:2px}
+.pipeline-steps{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.pip-step{display:flex;gap:14px;align-items:flex-start;padding:10px 14px;background:var(--surface);border-radius:8px;border:1px solid var(--border)}
+.pip-num{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--acc1);min-width:24px;line-height:1.2}
+.pip-text{font-size:13px;color:var(--muted);line-height:1.5}
+.pip-text strong{color:var(--text)}
+.audio-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:18px;margin-bottom:12px}
+.audio-tool{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px;color:var(--text)}
+.audio-role{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:10px;font-weight:700}
+.suno-role{background:#fdeee0;color:#963200;border:1px solid #f0b888}
+.eleven-role{background:#ece6f8;color:#3a2880;border:1px solid #c0b0e8}
+.udio-role{background:#d8edf8;color:#104a80;border:1px solid #a8ccec}
+.tip-box{background:#fef6ec;border:1px solid #edd8b8;border-radius:8px;padding:12px 14px;margin-top:12px}
+.tip-box .tip-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--acc1);letter-spacing:.1em;margin-bottom:4px;font-weight:700}
+.tip-box p{font-size:13px;color:#805030}
+.bonus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+.bonus-card{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:16px}
+.bonus-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px;color:var(--acc1)}
+@media(max-width:600px){.pros-cons{grid-template-columns:1fr}.nav-brand{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">AI VIDEO</div>
+  <button class="tab active" onclick="show('models')">Моделі</button>
+  <button class="tab" onclick="show('camera')">Камера</button>
+  <button class="tab" onclick="show('avatars')">Аватари / UGC</button>
+  <button class="tab" onclick="show('audio')">Аудіо</button>
+  <button class="tab" onclick="show('prompts')">Промпти</button>
+</nav>
+
+<!-- ═══════════════════════════════ MODELS ═══════════════════════════════ -->
+<div class="section active" id="models">
+  <div class="page-title">Відео<span style="color:var(--acc1)">моделі</span></div>
+  <div class="page-sub">Топ-5 станом на 7 квітня 2026 · рейтинг від кращого до ситуативного</div>
+
+  <!-- SEEDANCE -->
+  <div class="card c1" style="margin-bottom:16px">
+    <div class="card-rank">1</div>
+    <div class="card-name" style="color:#1460a0">Seedance 2.0</div>
+    <div class="card-tag" style="background:#d8edf8;color:#1460a0;border:1px solid #a8ccec">ByteDance · лют. 2026</div>
+    <p>Єдина модель де аудіо і відео народжуються разом в одній архітектурі — не склеюються потім. Phoneme-level lip sync в 8+ мовах. До 25 сек, 12 референс-файлів одночасно. <strong>Лідер у blind-голосуваннях Artificial Analysis</strong> і з аудіо, і без.</p>
+    <div class="pros-cons">
+      <div>
+        <div class="pros-label">ПЕРЕВАГИ</div>
+        <ul class="item-list pros-list">
+          <li>Unified audio-video — ідеальний lip sync автоматично</li>
+          <li>Найкраща консистентність персонажів</li>
+          <li>Multi-shot з одного промпту</li>
+          <li>До 25 секунд відео</li>
+          <li>#1 у сліпих тестах Artificial Analysis</li>
+        </ul>
+      </div>
+      <div>
+        <div class="cons-label">НЕДОЛІКИ</div>
+        <ul class="item-list cons-list">
+          <li>Немає прямого сайту — тільки через fal.ai, Freepik</li>
+          <li>Аудіо іноді muffled у Kling-порівнянні</li>
+          <li>Менш «кіношний» look ніж Runway</li>
+        </ul>
+      </div>
+    </div>
+    <div class="when-tag"><strong>КОЛИ БРАТИ</strong>Відео з діалогом, декілька персонажів, нативний звук обов'язковий</div>
+  </div>
+
+  <!-- KLING -->
+  <div class="card c2" style="margin-bottom:16px">
+    <div class="card-rank">2</div>
+    <div class="card-name" style="color:var(--acc2)">Kling 3.0</div>
+    <div class="card-tag" style="background:#fde0e0;color:#882020;border:1px solid #e8b0b0">Kuaishou · 5 лют. 2026</div>
+    <p>Перша модель з <strong>multi-shot storyboard</strong> — до 6 камерних кутів в одній генерації, всі консистентні. Нативна 4K/60fps. Найреалістичніший рух тіла і action-сцени. Є безкоштовний тир.</p>
+    <div class="pros-cons">
+      <div>
+        <div class="pros-label">ПЕРЕВАГИ</div>
+        <ul class="item-list pros-list">
+          <li>4K / 60fps — native, не upscale</li>
+          <li>Multi-shot: 6 кутів в одній генерації</li>
+          <li>Найкращий людський рух і action</li>
+          <li>Нативний аудіо + lip sync (6 мов)</li>
+          <li>Безкоштовний тир з щоденними кредитами</li>
+        </ul>
+      </div>
+      <div>
+        <div class="cons-label">НЕДОЛІКИ</div>
+        <ul class="item-list cons-list">
+          <li>Аудіо іноді muffled порівняно з Seedance</li>
+          <li>Reference image fidelity слабша за Veo</li>
+          <li>Рендер довгий на 4K Pro якості</li>
+        </ul>
+      </div>
+    </div>
+    <div class="when-tag"><strong>КОЛИ БРАТИ</strong>Люди, рух, action, серійний контент з консистентним персонажем, product animation</div>
+  </div>
+
+  <!-- VEO -->
+  <div class="card c3" style="margin-bottom:16px">
+    <div class="card-rank">3</div>
+    <div class="card-name" style="color:var(--acc5)">Veo 3.1</div>
+    <div class="card-tag" style="background:#e0f4ea;color:#0e4e30;border:1px solid #a0d4b8">Google DeepMind · жовт. 2025</div>
+    <p>Найточніший <strong>prompt adherence</strong> — робить буквально те що написано. Ingredients-to-video: кілька референсів одночасно. #1 по VBench і MovieGenBench. Нативна 4K, вертикальне відео.</p>
+    <div class="pros-cons">
+      <div>
+        <div class="pros-label">ПЕРЕВАГИ</div>
+        <ul class="item-list pros-list">
+          <li>Prompt adherence — найкращий з усіх</li>
+          <li>Ingredients-to-video: товар + лого + колір разом</li>
+          <li>Найякісніший нативний діалог (48kHz)</li>
+          <li>Три тири: Lite / Fast / Quality</li>
+          <li>Нативне вертикальне відео 9:16</li>
+        </ul>
+      </div>
+      <div>
+        <div class="cons-label">НЕДОЛІКИ</div>
+        <ul class="item-list cons-list">
+          <li>Тільки через Google ecosystem (Gemini $20/міс)</li>
+          <li>Іноді «AI look» на широких планах</li>
+          <li>Reference image — риси персонажа можуть «поплисти»</li>
+          <li>Дорожчий за Kling (~$0.40/кліп quality tier)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="when-tag"><strong>КОЛИ БРАТИ</strong>Product video де важлива точність деталей, будь-що де промпт має виконуватись буквально</div>
+  </div>
+
+  <!-- LUMA -->
+  <div class="card c4" style="margin-bottom:16px">
+    <div class="card-rank">4</div>
+    <div class="card-name" style="color:#3a2880">Luma Ray3</div>
+    <div class="card-tag" style="background:#ece6f8;color:#3a2880;border:1px solid #c0b0e8">Luma AI · 2025</div>
+    <p>Лідер по <strong>симуляції фізики</strong> — рідини, тканини, дим, пил виглядають переконливо. 4K HDR, Hi-Fi Diffusion. Ідеальний для атмосферних сцен і splash product video.</p>
+    <div class="pros-cons">
+      <div>
+        <div class="pros-label">ПЕРЕВАГИ</div>
+        <ul class="item-list pros-list">
+          <li>Найкраща фізика рідин, тканин, диму</li>
+          <li>4K HDR — матеріальна, «важка» картинка</li>
+          <li>Keyframe control: start + end frame</li>
+          <li>Доступний тир від $7.99/міс</li>
+        </ul>
+      </div>
+      <div>
+        <div class="cons-label">НЕДОЛІКИ</div>
+        <ul class="item-list cons-list">
+          <li>Не генерує нативний аудіо</li>
+          <li>Максимум 10 секунд</li>
+          <li>Слабкіший з персонажами і людьми</li>
+          <li>Без персонажів — найкращий, з ними — ні</li>
+        </ul>
+      </div>
+    </div>
+    <div class="when-tag"><strong>КОЛИ БРАТИ</strong>Splash для product video, природні сцени, тканини, atmospheric B-roll без персонажів</div>
+  </div>
+
+  <!-- RUNWAY -->
+  <div class="card c5" style="margin-bottom:16px">
+    <div class="card-rank">5</div>
+    <div class="card-name" style="color:var(--acc6)">Runway Gen-4.5</div>
+    <div class="card-tag" style="background:#fdeee0;color:#963200;border:1px solid #f0b888">Runway · 2025</div>
+    <p>Не генератор з нуля — <strong>інструмент контролю і редагування</strong>. Motion Brush, Aleph-редактор (трансформація готового відео текстом). #1 у blind-тестах по cinematic feel.</p>
+    <div class="pros-cons">
+      <div>
+        <div class="pros-label">ПЕРЕВАГИ</div>
+        <ul class="item-list pros-list">
+          <li>Motion Brush — малюєш рух прямо на кадрі</li>
+          <li>Aleph: трансформуєш готове відео текстом</li>
+          <li>#1 по cinematic feel у blind-тестах</li>
+          <li>Найкраще для постпродакшн і доведення</li>
+        </ul>
+      </div>
+      <div>
+        <div class="cons-label">НЕДОЛІКИ</div>
+        <ul class="item-list cons-list">
+          <li>Не генерує нативний аудіо (silent output)</li>
+          <li>Дорожче ніж Kling при тому ж об'ємі</li>
+          <li>Менш підходить для генерації з нуля</li>
+        </ul>
+      </div>
+    </div>
+    <div class="when-tag"><strong>КОЛИ БРАТИ</strong>Постпродакшн, виправлення деталей у готовому кліпі, cinematic grade фінального матеріалу</div>
+  </div>
+
+  <div class="tip-box" style="margin-top:24px">
+    <div class="tip-label">ГОЛОВНЕ ПРАВИЛО</div>
+    <p>Seedance і Kling — знімаєш сцену з нуля. Runway — монтажний стіл де доводиш готовий матеріал. Luma — коли важлива фізика без людей. Veo — коли промпт має виконуватись буквально.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CAMERA ═══════════════════════════════ -->
+<div class="section" id="camera">
+  <div class="page-title">Рухи <span style="color:var(--acc1)">камери</span></div>
+  <div class="page-sub">Як правильно писати рух камери в промпті · структура + приклади</div>
+
+  <div class="prompt-block">
+    <h3>Структура промпту</h3>
+    <div class="prompt-parts">
+      <span class="pp pp1">SCENE</span>
+      <span style="color:var(--hint);padding:6px 4px">→</span>
+      <span class="pp pp2">CHARACTERS</span>
+      <span style="color:var(--hint);padding:6px 4px">→</span>
+      <span class="pp pp3">ACTION</span>
+      <span style="color:var(--hint);padding:6px 4px">→</span>
+      <span class="pp pp4">CAMERA</span>
+      <span style="color:var(--hint);padding:6px 4px">→</span>
+      <span class="pp pp5">AUDIO / STYLE</span>
+    </div>
+    <div class="prompt-example">Dimly lit jazz bar, late night. <span style="color:#963200">A woman in a red dress sits at the counter.</span> <span style="color:#882020">She slowly raises a glass.</span> <span style="color:#3a2880">Camera: slow dolly-in from wide to medium close-up, shallow DOF, rack focus to her face.</span> <span style="color:#0e4e30">Audio: soft jazz piano, distant chatter, glass clinking.</span></div>
+  </div>
+
+  <h2>Лінійні рухи</h2>
+  <div class="cam-grid">
+    <div class="cam-card">
+      <div class="cam-name">Dolly in / Dolly out</div>
+      <div class="cam-uk">Наїзд / Від'їзд</div>
+      <div class="cam-prompt">slow dolly-in toward subject</div>
+      <div class="cam-prompt">camera slowly pulls back, dolly out</div>
+      <div class="cam-use">Наближення до суб'єкту або розкриття простору навколо нього</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Push-in</div>
+      <div class="cam-uk">Повільний наїзд</div>
+      <div class="cam-prompt">slow cinematic push-in toward subject, subtle zoom compression</div>
+      <div class="cam-use">Драматичний момент, напруга, фінал сцени</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Tracking shot</div>
+      <div class="cam-uk">Супровід</div>
+      <div class="cam-prompt">camera tracks alongside subject from left, steadicam smooth follow</div>
+      <div class="cam-use">Людина йде, машина їде — камера рухається паралельно</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Lateral slide</div>
+      <div class="cam-uk">Бокове ковзання</div>
+      <div class="cam-prompt">camera slides slowly from left to right, revealing the scene</div>
+      <div class="cam-use">Розкриття простору, панорама локації</div>
+    </div>
+  </div>
+
+  <h2>Обертальні рухи</h2>
+  <div class="cam-grid">
+    <div class="cam-card">
+      <div class="cam-name">Orbit / Arc shot</div>
+      <div class="cam-uk">Облет навколо</div>
+      <div class="cam-prompt">camera slowly orbits 90 degrees around the subject, arc shot</div>
+      <div class="cam-use">Product video, 360° обліт навколо об'єкту або персонажа</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Pan left / Pan right</div>
+      <div class="cam-uk">Горизонтальний поворот</div>
+      <div class="cam-prompt">slow pan right revealing the landscape, static tripod</div>
+      <div class="cam-use">Огляд локації, перехід між об'єктами в кадрі</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Tilt up / Tilt down</div>
+      <div class="cam-uk">Вертикальний поворот</div>
+      <div class="cam-prompt">camera tilts up slowly from ground level to reveal the building</div>
+      <div class="cam-use">Розкриття висоти, масштабу, об'єкту знизу вгору</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Dutch angle</div>
+      <div class="cam-uk">Похилений ракурс</div>
+      <div class="cam-prompt">slight dutch angle, camera tilted 15 degrees, unsettling mood</div>
+      <div class="cam-use">Напруга, дискомфорт, психологічний ефект</div>
+    </div>
+  </div>
+
+  <h2>Вертикальні рухи</h2>
+  <div class="cam-grid">
+    <div class="cam-card">
+      <div class="cam-name">Crane up / Crane down</div>
+      <div class="cam-uk">Підйом / Опускання</div>
+      <div class="cam-prompt">camera slowly rises from ground level, crane shot revealing the cityscape</div>
+      <div class="cam-use">Відкриття локації, фінальний план сцени</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Overhead / Bird's eye</div>
+      <div class="cam-uk">Зверху вниз</div>
+      <div class="cam-prompt">top-down overhead shot, camera looks straight down at subject</div>
+      <div class="cam-use">Flat lay product, розкладки, unboxing POV</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Low angle</div>
+      <div class="cam-uk">Нижній ракурс</div>
+      <div class="cam-prompt">extreme low angle, camera at ground level looking up</div>
+      <div class="cam-use">Монументальність, сила, luxury product знизу вгору</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">POV shot</div>
+      <div class="cam-uk">Від першої особи</div>
+      <div class="cam-prompt">POV shot, first-person perspective, hands reach forward</div>
+      <div class="cam-use">Unboxing, від першої особи, UGC-формат</div>
+    </div>
+  </div>
+
+  <h2>Спеціальні рухи</h2>
+  <div class="cam-grid">
+    <div class="cam-card">
+      <div class="cam-name">Steadicam follow</div>
+      <div class="cam-uk">Плавний супровід</div>
+      <div class="cam-prompt">steadicam smooth follow, camera follows subject from behind, slight natural sway</div>
+      <div class="cam-use">Людина йде, «живе» відчуття репортажного відео</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Handheld</div>
+      <div class="cam-uk">З рук</div>
+      <div class="cam-prompt">slightly shaky handheld camera, documentary style, natural movement</div>
+      <div class="cam-use">UGC, документальний стиль, «нативний» вигляд</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Zoom in / Zoom out</div>
+      <div class="cam-uk">Зум</div>
+      <div class="cam-prompt">slow optical zoom in, lens compression, 85mm to 200mm feel</div>
+      <div class="cam-use">Виділити деталь не рухаючи камеру, compression effect</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Rack focus</div>
+      <div class="cam-uk">Перефокусування</div>
+      <div class="cam-prompt">rack focus from background to foreground subject, shallow DOF</div>
+      <div class="cam-use">Переключити увагу між об'єктами в одному кадрі</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Whip pan</div>
+      <div class="cam-uk">Різкий поворот</div>
+      <div class="cam-prompt">fast whip pan transition to the right, motion blur</div>
+      <div class="cam-use">Динамічний перехід між сценами, енергійний монтаж</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Macro / Extreme close-up</div>
+      <div class="cam-uk">Макро</div>
+      <div class="cam-prompt">extreme macro close-up of product texture, ultra shallow DOF, sharp detail</div>
+      <div class="cam-use">Деталь продукту, матеріал, текстура — luxury reveal</div>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top:28px">
+    <div class="tip-label">ВАЖЛИВО</div>
+    <p>Конкретна термінологія дає кращий результат ніж загальні слова. <code>slow dolly-in</code> краще ніж <code>camera moves closer</code>. Якщо хочеш певний фокус — завжди додавай <code>shallow depth of field</code> або <code>deep focus</code>.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ AVATARS ═══════════════════════════════ -->
+<div class="section" id="avatars">
+  <div class="page-title">Аватари <span style="color:#1460a0">&amp; UGC</span></div>
+  <div class="page-sub">AI-персонажі що говорять · UGC-формат · пайплайн від фото до публікації</div>
+
+  <h2>Пайплайн</h2>
+  <div class="pipeline-steps">
+    <div class="pip-step">
+      <div class="pip-num">1</div>
+      <div class="pip-text"><strong>Генерація персонажу</strong> — Midjourney або Nano Banana Pro. Реалістична людина, нейтральний фон, пряме освітлення обличчя. Чим чіткіше обличчя — тим кращий lip sync.</div>
+    </div>
+    <div class="pip-step">
+      <div class="pip-num">2</div>
+      <div class="pip-text"><strong>Клонування голосу</strong> — ElevenLabs. Завантажити 30 сек аудіо → отримати клон. Налаштувати stability, similarity, style exaggeration.</div>
+    </div>
+    <div class="pip-step">
+      <div class="pip-num">3</div>
+      <div class="pip-text"><strong>Lip sync + анімація</strong> — HeyGen, Creatify або D-ID. Завантажити фото персонажу + аудіо або ввести текст. Вибрати stock або custom avatar.</div>
+    </div>
+    <div class="pip-step">
+      <div class="pip-num">4</div>
+      <div class="pip-text"><strong>Монтаж</strong> — CapCut або Premiere. Субтитри, B-roll, музика. Весь цикл — 20–30 хв якщо скрипт готовий.</div>
+    </div>
+  </div>
+
+  <h2>Інструменти</h2>
+  <div class="grid3">
+    <div class="card" style="border-color:#a8ccec">
+      <div class="card-name" style="font-size:16px;color:var(--acc3)">HeyGen Avatar IV</div>
+      <div class="chip-row" style="margin:6px 0 10px"><span class="chip" style="border-color:#38bdf830;color:var(--acc3)">основний вибір</span></div>
+      <ul class="item-list pros-list" style="margin-bottom:10px">
+        <li>Найкращий lip sync і мікровирази 2026</li>
+        <li>600+ аватарів, 175+ мов</li>
+        <li>Digital Twin — цифровий двійник на своєму відео</li>
+        <li>CRM-інтеграції (HubSpot, Zapier)</li>
+      </ul>
+      <div class="cam-use" style="margin-top:8px">Маркетинг, презентації, серійний контент, персоналізовані продажі</div>
+    </div>
+    <div class="card" style="border-color:#96320030">
+      <div class="card-name" style="font-size:16px;color:var(--acc1)">Creatify</div>
+      <div class="chip-row" style="margin:6px 0 10px"><span class="chip" style="border-color:#96320030;color:var(--acc1)">UGC реклама</span></div>
+      <ul class="item-list pros-list" style="margin-bottom:10px">
+        <li>URL товару → готове відео за хвилини</li>
+        <li>A/B тест варіацій вбудований</li>
+        <li>Аналітика перформансу</li>
+        <li>700+ аватарів, 29 мов</li>
+      </ul>
+      <div class="cam-use" style="margin-top:8px">E-commerce реклама, TikTok/Meta Ads, швидкі демо для клієнтів</div>
+    </div>
+    <div class="card" style="border-color:#3a288030">
+      <div class="card-name" style="font-size:16px;color:var(--acc4)">D-ID</div>
+      <div class="chip-row" style="margin:6px 0 10px"><span class="chip" style="border-color:#3a288030;color:var(--acc4)">API / продукт</span></div>
+      <ul class="item-list pros-list" style="margin-bottom:10px">
+        <li>API-first — вбудовуєш у свій продукт</li>
+        <li>Інтерактивний аватар в реальному часі</li>
+        <li>Відповідає на питання live</li>
+        <li>Від $5.90/міс</li>
+      </ul>
+      <div class="cam-use" style="margin-top:8px">Customer support, interactive landing pages, AI-консьєрж</div>
+    </div>
+  </div>
+
+  <h2>Що робить відео «нативним»</h2>
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="audio-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px">Ракурс і освітлення</div>
+      <ul class="item-list" style="color:var(--muted)">
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Не по центру — трохи зміщений, як тримають телефон самі</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Одне вікно збоку краще ніж два рівних softbox</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Фон — реальна кімната, не нейтральний градієнт</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Трохи нерівне освітлення = ознака реальності</li>
+      </ul>
+    </div>
+    <div class="audio-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px">Голос і поведінка</div>
+      <ul class="item-list" style="color:var(--muted)">
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Паузи, нерівний темп — знизити stability в ElevenLabs</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Style exaggeration вгору — менш «дикторський» стиль</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Легке зерно на фоні, трохи розмитий край кадру</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Перфектне відео підозріле — мікродефекти будують довіру</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 style="color:var(--acc1)">★ Бонус: Stock vs Custom Avatar</h2>
+  <div class="grid2">
+    <div class="prompt-block">
+      <h3 style="color:var(--muted)">Stock Avatar</h3>
+      <ul class="item-list" style="color:var(--muted)">
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Готовий персонаж з бібліотеки</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Швидко, дешево, без дозволів</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Один аватар = у тисячах інших відео</li>
+        <li style="padding-left:14px;margin-bottom:6px;position:relative">Підходить для тестів і чернеток</li>
+      </ul>
+    </div>
+    <div class="prompt-block" style="border-color:#96320030">
+      <h3>Custom Avatar</h3>
+      <ul class="item-list pros-list">
+        <li>Завантажуєш фото або відео → модель робить копію</li>
+        <li>Унікальний персонаж бренду</li>
+        <li>Потрібна згода людини (HeyGen consent flow)</li>
+        <li>Для клієнтської роботи — завжди custom</li>
+      </ul>
+      <div class="tip-box" style="margin-top:12px">
+        <div class="tip-label">ПРАВИЛО</div>
+        <p>Чужу зовнішність без дозволу — навіть «схожого» персонажа — не можна використовувати комерційно.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="color:var(--acc1)">★ Бонус: Формати UGC контенту</h2>
+  <div class="bonus-grid">
+    <div class="bonus-card">
+      <div class="bonus-title">Product Review</div>
+      <p style="font-size:13px">Аватар тримає товар, розповідає переваги від першої особи. Ракурс — телефон. Hook перші 3 секунди — ключ.</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">Before / After</div>
+      <p style="font-size:13px">Аватар показує проблему → рішення. Чіткий контраст. Добре заходить у beauty, fitness, SaaS.</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">Tutorial / How-to</div>
+      <p style="font-size:13px">Покроковий формат. Аватар пояснює — B-roll показує. Субтитри обов'язкові — 80% дивляться без звуку.</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">Testimonial</div>
+      <p style="font-size:13px">«Я спробував і ось що вийшло». Максимально нативний вигляд. Імпровізаційний темп, не скриптований.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ AUDIO ═══════════════════════════════ -->
+<div class="section" id="audio">
+  <div class="page-title"><span style="color:#3a2880">Аудіо</span> пайплайн</div>
+  <div class="page-sub">Музика · Голос · SFX · Синхронізація · Комерційна безпека</div>
+
+  <div class="tip-box" style="margin-bottom:28px">
+    <div class="tip-label">ГОЛОВНЕ</div>
+    <p>Аудіо — це 50% сприйняття відео. Показати одне відео без звуку, з поганою музикою і з правильним аудіо — різниця одразу очевидна.</p>
+  </div>
+
+  <h2>Інструменти</h2>
+
+  <div class="audio-card">
+    <div class="audio-tool">ElevenLabs</div>
+    <div class="audio-role eleven-role">ЄДИНИЙ АУДІО-ХАБ</div>
+    <div class="grid2">
+      <div>
+        <h3 style="margin-bottom:8px">Що вміє</h3>
+        <ul class="item-list pros-list">
+          <li>TTS і клонування голосу (30 сек аудіо → клон)</li>
+          <li>SFX — текстом описуєш звук → отримуєш ефект</li>
+          <li>ElevenMusic — до 7 треків/день безкоштовно (1 квіт. 2026)</li>
+          <li>Audio Studio 3.0 — таймлайн: войсовер + музика + SFX разом</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:8px">Налаштування голосу</h3>
+        <ul class="item-list" style="color:var(--muted)">
+          <li style="padding-left:14px;margin-bottom:6px;position:relative"><strong>Stability</strong> — вище = рівніше, нижче = живіше</li>
+          <li style="padding-left:14px;margin-bottom:6px;position:relative"><strong>Similarity</strong> — схожість з оригіналом</li>
+          <li style="padding-left:14px;margin-bottom:6px;position:relative"><strong>Style exaggeration</strong> — «акторськість» голосу</li>
+          <li style="padding-left:14px;margin-bottom:6px;position:relative">Для UGC: stability ↓, style ↑</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="audio-card">
+    <div class="audio-tool">Suno 5.5</div>
+    <div class="audio-role suno-role">НАЙКРАЩА МУЗИКА</div>
+    <div class="grid2">
+      <div>
+        <h3 style="margin-bottom:8px">Ключові фічі</h3>
+        <ul class="item-list pros-list">
+          <li>Найкращий вокал і структура треку з усіх</li>
+          <li>Stem separation — забрати тільки інструментал</li>
+          <li>MIDI export — доопрацювати в DAW</li>
+          <li>DAW-режим для тонкого контролю</li>
+          <li>Комерційна ліцензія на платних планах ($10+/міс)</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:8px">Приклад промпту</h3>
+        <div class="cam-prompt" style="font-size:11px;line-height:1.6">Minimalist cinematic background score, slow tempo 55 BPM, soft piano with subtle strings, no vocals, luxury feel, smooth fade out</div>
+        <div class="cam-use">Не «красива музика» — а темп, інструменти, настрій, вокал є чи ні</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="audio-card">
+    <div class="audio-tool">Udio v4</div>
+    <div class="audio-role udio-role">ТОНКИЙ КОНТРОЛЬ</div>
+    <p>Головна фіча — <strong>inpainting</strong>: виділяєш слабкий відрізок треку і регенеруєш тільки його. Не треба починати з нуля якщо один бридж вийшов не так. Найкращий для доведення треку до точного настрою сцени.</p>
+    <div class="tip-box" style="margin-top:12px">
+      <div class="tip-label">НЮАНС</div>
+      <p>Suno і Udio уклали угоди з Universal і Warner наприкінці 2025. На платних планах — комерційне використання дозволено. ElevenMusic — ліцензовано з першого дня.</p>
+    </div>
+  </div>
+
+  <h2>Синхронізація з відео</h2>
+  <div class="grid2">
+    <div class="prompt-block">
+      <h3>Правила монтажу аудіо</h3>
+      <ul class="item-list" style="color:var(--muted)">
+        <li style="padding-left:14px;margin-bottom:8px;position:relative">Різати музику по <strong>руху в кадрі</strong> — не по таймеру</li>
+        <li style="padding-left:14px;margin-bottom:8px;position:relative">Fade in на початку — 0.3–0.5 сек</li>
+        <li style="padding-left:14px;margin-bottom:8px;position:relative">Fade out в кінці — 0.5–1.0 сек</li>
+        <li style="padding-left:14px;margin-bottom:8px;position:relative">Reveal без музики → музика входить після = підсилює ефект</li>
+        <li style="padding-left:14px;margin-bottom:8px;position:relative">SFX на кожну фізичну дію: навіть тихий impact-звук мозок фіксує</li>
+      </ul>
+    </div>
+    <div class="prompt-block">
+      <h3>SFX промпти (ElevenLabs)</h3>
+      <div class="cam-prompt">glass bottle hitting marble surface, sharp impact, short reverb</div>
+      <div class="cam-prompt">liquid pouring slowly, gentle splash, quiet ambience</div>
+      <div class="cam-prompt">product unboxing, paper rustling, soft thud</div>
+      <div class="cam-prompt">city ambience, evening, distant traffic, wind</div>
+    </div>
+  </div>
+
+  <h2 style="color:var(--acc1)">★ Бонус: Аудіо для різних форматів</h2>
+  <div class="bonus-grid">
+    <div class="bonus-card">
+      <div class="bonus-title">Luxury Product</div>
+      <p style="font-size:13px">50–60 BPM · piano + strings · no vocals · minor key або neutral · fade in повільний</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">Energy / Sport</div>
+      <p style="font-size:13px">120–140 BPM · electric guitar або synth · hard beat · може бути вокал без слів</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">Tech / SaaS</div>
+      <p style="font-size:13px">90–110 BPM · minimal electronic · clean hi-hats · optimistic tone · no lyrics</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">Beauty / Lifestyle</div>
+      <p style="font-size:13px">70–85 BPM · acoustic guitar або lo-fi piano · warm · breathy female vocal або no vocals</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">Food / Restaurant</div>
+      <p style="font-size:13px">80–95 BPM · jazz або bossa nova · upbeat · light percussion · warm brass</p>
+    </div>
+    <div class="bonus-card">
+      <div class="bonus-title">UGC / TikTok</div>
+      <p style="font-size:13px">Тренд-трек або upbeat pop · 100–120 BPM · підбирай під актуальні звуки платформи</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PROMPTS ═══════════════════════════════ -->
+<div class="section" id="prompts">
+  <div class="page-title">Промпти <span style="color:var(--acc2)">шпаргалка</span></div>
+  <div class="page-sub">Готові шаблони · типові артефакти · luxury keywords</div>
+
+  <h2>Product Animation — типи і промпти</h2>
+  <div class="cam-grid">
+    <div class="cam-card">
+      <div class="cam-name">Floating</div>
+      <div class="cam-uk">Левітація · luxury / beauty</div>
+      <div class="cam-prompt">[product] floating in mid-air, slowly rotating 360°, soft golden rim light, smooth gentle motion, dark background, shallow DOF</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Reveal</div>
+      <div class="cam-uk">Відкриття · hook для рекламного ролика</div>
+      <div class="cam-prompt">extreme macro close-up of [product texture], camera slowly pulls back to reveal full product on marble surface, cinematic DOF</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Splash</div>
+      <div class="cam-uk">Рідина · напої / парфуми · Luma Ray3</div>
+      <div class="cam-prompt">[product] surrounded by liquid droplets splashing in slow motion, high-speed photography style, crystal clear droplets, dark background, rim lighting</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Unboxing</div>
+      <div class="cam-uk">Розпакування · UGC / e-commerce</div>
+      <div class="cam-prompt">hands carefully unboxing [product] from premium packaging, POV shot, soft natural window light, slow deliberate movement</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Hero shot</div>
+      <div class="cam-uk">Сильний план · фінал ролика</div>
+      <div class="cam-prompt">[product] on [surface], slow orbit 45 degrees, volumetric light from above, dramatic shadows, epic cinematic feel, 4K</div>
+    </div>
+    <div class="cam-card">
+      <div class="cam-name">Lifestyle</div>
+      <div class="cam-uk">В контексті · реклама і соцмережі</div>
+      <div class="cam-prompt">[person] using [product] in [location], natural light, handheld camera, authentic UGC style, warm tones</div>
+    </div>
+  </div>
+
+  <h2>Luxury keywords</h2>
+  <div class="grid2">
+    <div class="prompt-block">
+      <h3>Матеріали поверхні</h3>
+      <div class="chip-row">
+        <span class="chip">brushed obsidian</span>
+        <span class="chip">polished marble</span>
+        <span class="chip">frosted glass</span>
+        <span class="chip">matte ceramic</span>
+        <span class="chip">dark walnut wood</span>
+        <span class="chip">brushed gold metal</span>
+        <span class="chip">wet black stone</span>
+        <span class="chip">silk fabric surface</span>
+      </div>
+    </div>
+    <div class="prompt-block">
+      <h3>Освітлення</h3>
+      <div class="chip-row">
+        <span class="chip">rim light</span>
+        <span class="chip">volumetric light</span>
+        <span class="chip">golden hour</span>
+        <span class="chip">soft diffused light</span>
+        <span class="chip">subtle lens flare</span>
+        <span class="chip">dramatic side light</span>
+        <span class="chip">warm amber glow</span>
+        <span class="chip">cool blue backlight</span>
+      </div>
+    </div>
+    <div class="prompt-block">
+      <h3>Глибина різкості</h3>
+      <div class="chip-row">
+        <span class="chip">ultra-shallow DOF</span>
+        <span class="chip">bokeh background</span>
+        <span class="chip">lens compression</span>
+        <span class="chip">rack focus</span>
+        <span class="chip">tack sharp subject</span>
+        <span class="chip">85mm portrait feel</span>
+      </div>
+    </div>
+    <div class="prompt-block">
+      <h3>Стиль</h3>
+      <div class="chip-row">
+        <span class="chip">editorial luxury</span>
+        <span class="chip">high fashion campaign</span>
+        <span class="chip">cinematic commercial</span>
+        <span class="chip">magazine quality</span>
+        <span class="chip">award-winning ad</span>
+        <span class="chip">premium brand feel</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Типові артефакти і як їх різати</h2>
+  <div class="card" style="margin-bottom:0">
+    <div class="artifact-row">
+      <div>
+        <div class="artifact-name">Дрейф обличчя</div>
+        <div class="fix-badge">FIX PROMPT</div>
+      </div>
+      <div class="artifact-desc">Додай: <code>face remains stable and consistent throughout, no morphing</code></div>
+    </div>
+    <div class="artifact-row">
+      <div>
+        <div class="artifact-name">Зайві пальці</div>
+        <div class="fix-badge">FIX PROMPT</div>
+      </div>
+      <div class="artifact-desc">Додай: <code>hands stay natural, no extra fingers, realistic hand anatomy</code></div>
+    </div>
+    <div class="artifact-row">
+      <div>
+        <div class="artifact-name">Мерехтіння фону</div>
+        <div class="fix-badge">FIX PROMPT</div>
+      </div>
+      <div class="artifact-desc">Додай: <code>stable background, no flickering, consistent environment</code></div>
+    </div>
+    <div class="artifact-row">
+      <div>
+        <div class="artifact-name">Дергаючий рух</div>
+        <div class="fix-badge">FIX PROMPT</div>
+      </div>
+      <div class="artifact-desc">Додай: <code>smooth motion, natural pace, fluid movement, no jitter</code></div>
+    </div>
+    <div class="artifact-row">
+      <div>
+        <div class="artifact-name">Деформація об'єкту</div>
+        <div class="fix-badge">FIX PROMPT</div>
+      </div>
+      <div class="artifact-desc">Додай: <code>object maintains consistent shape and proportions throughout</code></div>
+    </div>
+    <div class="artifact-row">
+      <div>
+        <div class="artifact-name">Зміна стилю між кадрами</div>
+        <div class="fix-badge">FIX WORKFLOW</div>
+      </div>
+      <div class="artifact-desc">Використовуй image-to-video з тим самим reference image для всіх кліпів серії</div>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top:24px">
+    <div class="tip-label">ЛАЙФХАК</div>
+    <p>Перед тим як генерувати в 4K — зроби тест у 1080p з тим самим промптом. Промпт відпрацьований → фінальна якість. Так витрачаєш в 4× менше кредитів на ітерації.</p>
+  </div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
